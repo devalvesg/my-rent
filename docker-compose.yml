@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: database
+    image: postgres
+    environment:
+      POSTGRES_DB: my-rent-dev
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
