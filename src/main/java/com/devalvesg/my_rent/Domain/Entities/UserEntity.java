@@ -22,13 +22,9 @@ public abstract class UserEntity {
     @Column(unique = true)
     private String document;
 
+    private String phone;
+
     private String firstName;
 
     private String lastName;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(name="users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id"))
-    private List<RoleEntity> roles;
 }
