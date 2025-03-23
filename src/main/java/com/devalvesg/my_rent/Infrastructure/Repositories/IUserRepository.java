@@ -1,4 +1,4 @@
-package com.devalvesg.my_rent.Domain.Contracts;
+package com.devalvesg.my_rent.Infrastructure.Repositories;
 
 import com.devalvesg.my_rent.Domain.Entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
