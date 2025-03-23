@@ -18,11 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    public SecurityConfiguration() {
-
-
-    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -32,8 +27,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                                .anyRequest().authenticated())
-                .addFilterBefore(secu).build();
+                                .anyRequest().authenticated()).build();
     }
 
     @Bean
