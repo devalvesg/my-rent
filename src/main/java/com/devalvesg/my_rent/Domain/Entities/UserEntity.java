@@ -22,6 +22,8 @@ public abstract class UserEntity {
     @Column(unique = true)
     private String document;
 
+    private String phone;
+
     private String firstName;
 
     private String lastName;
