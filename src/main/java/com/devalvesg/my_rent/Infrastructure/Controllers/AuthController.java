@@ -1,6 +1,9 @@
 package com.devalvesg.my_rent.Infrastructure.Controllers;
 
-import com.devalvesg.my_rent.Application.UseCase.CreateUserUseCase;
+import com.devalvesg.my_rent.Application.UseCase.Contracts.ICreateLesseeUseCase;
+import com.devalvesg.my_rent.Application.UseCase.Contracts.ICreateLessorUseCase;
+import com.devalvesg.my_rent.Application.UseCase.CreateLesseeUseCase;
+import com.devalvesg.my_rent.Application.UseCase.CreateLessorUseCase;
 import com.devalvesg.my_rent.Domain.Mappers.OutputMapping;
 import com.devalvesg.my_rent.Domain.RequestDTO.LoginRequest;
 import com.devalvesg.my_rent.Domain.RequestDTO.UserRequest;
@@ -18,12 +21,14 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final OutputMapping mapper;
-    private final CreateUserUseCase createUserUseCase;
+    private final ICreateLessorUseCase createLessorUseCase;
+    private final ICreateLesseeUseCase createLesseeUseCase;
 
-    public AuthController(AuthenticationManager authenticationManager, OutputMapping mapper, CreateUserUseCase createUserUseCase) {
+    public AuthController(AuthenticationManager authenticationManager, OutputMapping mapper, ICreateLessorUseCase createLessorUseCase, ICreateLesseeUseCase createLesseeUseCase) {
         this.authenticationManager = authenticationManager;
         this.mapper = mapper;
-        this.createUserUseCase = createUserUseCase;
+        this.createLessorUseCase = createLessorUseCase;
+        this.createLesseeUseCase = createLesseeUseCase;
     }
 
     @PostMapping("/login")
@@ -35,9 +40,16 @@ public class AuthController {
     }
 
     @SneakyThrows
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid UserRequest registerData) {
-        var response = createUserUseCase.createUser(mapper.mapUserToEntity(registerData));
+    @PostMapping("/register-lessor")
+    public ResponseEntity registerLessor(@RequestBody @Valid UserRequest registerData) {
+        var response = createLessorUseCase.createLessor(mapper.mapUserToEntity(registerData));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapUserToResponse(response));
+    }
+
+    @SneakyThrows
+    @PostMapping("/register-lessee")
+    public ResponseEntity registerLessee(@RequestBody @Valid UserRequest registerData) {
+        var response = createLesseeUseCase.createLessee(mapper.mapUserToEntity(registerData));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapUserToResponse(response));
     }
 }

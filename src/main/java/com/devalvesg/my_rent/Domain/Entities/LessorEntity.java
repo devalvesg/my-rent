@@ -16,6 +16,15 @@ import java.util.List;
 @AllArgsConstructor
 public class LessorEntity extends UserEntity {
 
+    public LessorEntity (UserEntity user){
+        setEmail(user.getEmail());
+        setDocument(user.getDocument());
+        setPassword(user.getPassword());
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setPhone(user.getPhone());
+    }
+
     @OneToMany(mappedBy = "lessor")
     private List<PropertyEntity> properties;
 

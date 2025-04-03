@@ -2,14 +2,15 @@ package com.devalvesg.my_rent.Domain.Entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
-@Getter
 @Setter
 @MappedSuperclass
-public abstract class UserEntity {
+@NoArgsConstructor
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +22,34 @@ public abstract class UserEntity {
 
     @Column(unique = true)
     private String document;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 
     private String phone;
 

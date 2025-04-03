@@ -1,12 +1,11 @@
 package com.devalvesg.my_rent.Infrastructure.Security;
 
 import com.devalvesg.my_rent.Domain.Entities.UserEntity;
-import com.devalvesg.my_rent.Infrastructure.Repositories.IUserRepository;
+import com.devalvesg.my_rent.Infrastructure.Repositories.Contract.ILessorRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.catalina.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,11 +19,11 @@ import java.util.Collections;
 public class SecurityFilter extends OncePerRequestFilter {
 
     TokenService tokenService;
-    IUserRepository userRepository;
+    ILessorRepository lessorRepository;
 
-    public SecurityFilter(TokenService tokenService, IUserRepository userRepository){
+    public SecurityFilter(TokenService tokenService, ILessorRepository userRepository){
         this.tokenService = tokenService;
-        this.userRepository = userRepository;
+        this.lessorRepository = userRepository;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = tokenService.validateToken(token);
 
         if(login != null){
-            UserEntity user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("User Not Found"));
+            UserEntity user = lessorRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("User Not Found"));
             var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);

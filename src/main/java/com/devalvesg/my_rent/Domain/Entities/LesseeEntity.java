@@ -12,6 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 public class LesseeEntity extends UserEntity {
 
+    public LesseeEntity (UserEntity user){
+        setEmail(user.getEmail());
+        setDocument(user.getDocument());
+        setPassword(user.getPassword());
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setPhone(user.getPhone());
+    }
+
     @OneToMany(mappedBy = "lessee")
     private List<ContractEntity> contracts;
 }
